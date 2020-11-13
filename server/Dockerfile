@@ -1,7 +1,5 @@
 FROM node:alpine
 
 WORKDIR /usr/src/app
-COPY ./budgetish_react/ ./
-RUN npm install --quiet
-COPY ./budgetish_react/ .
-RUN npm run start
+RUN npm install && npm install pm2 -g
+CMD pm2 --name budgetish start npm -- start && /bin/sh

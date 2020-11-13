@@ -12,23 +12,25 @@ services:
             - jenkins-data:/var/jenkins_home
     server:
         build: ./server
+        container_name: server
+        working_dir: /usr/src/app
         volumes: 
-            - .:/usr/src/app/
-            - /usr/src/app/node_modules
+            - ./server/budgetish_react:/usr/src/app/
         ports:
             - '3000:3000'
-        depends_on:
-            - database
+            - '8081:8081'
         environment:
             DATABASE_URL: jdbc:mysql://localhost:3306/user
+        stdin_open: true
+        tty: true
     database:
         build: ./database
         restart: always
         environment:
             MYSQL_DATABASE: 'db'
-            MYSQL_USER: 'user'
-            MYSQL_PASSWORD: 'password'
-            MYSQL_ROOT_PASSWORD: 'password'
+            MYSQL_USER: 'budgetish'
+            MYSQL_PASSWORD: '5tgbnhy6%TGBNHY^'
+            MYSQL_ROOT_PASSWORD: '5tgbnhy6%TGBNHY^'
         ports:
             - '3306:3306'
         volumes:
